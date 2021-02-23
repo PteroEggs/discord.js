@@ -1,0 +1,50 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta": {
+        "version": "PTDL_v1",
+        "update_url": null
+    },
+    "exported_at": "2021-02-23T06:04:04-05:00",
+    "name": "discord.js",
+    "author": "freelance@harrydev.me",
+    "description": "A slimmed down version of the node\/discord.js egg, created by harrydev.",
+    "features": null,
+    "images": [
+        "quay.io\/parkervcp\/pterodactyl-images:debian_nodejs-12"
+    ],
+    "file_denylist": "",
+    "startup": "\/usr\/local\/bin\/npm install && \/usr\/local\/bin\/node \/home\/container\/${BOT_JS_FILE}",
+    "config": {
+        "files": "{}",
+        "startup": "{\r\n    \"done\": \" \"\r\n}",
+        "logs": "{}",
+        "stop": "^c^c^c^c^c^c^c^c^c"
+    },
+    "scripts": {
+        "installation": {
+            "script": "#!\/bin\/bash\r\n# NodeJS Bot Installation Script\r\n#\r\n# Server Files: \/mnt\/server\r\napt update\r\napt install -y make gcc g++ libtool\r\n\r\nmkdir -p \/mnt\/server\r\ncd \/mnt\/server\r\n\r\necho \"Installing node requirements into folder\"\r\nif [[ ! -z ${NODE_PACKAGES} ]]; then\r\n    \/usr\/local\/bin\/npm install ${NODE_PACKAGES}\r\nfi\r\n\r\nif [ -f \/mnt\/server\/package.json ]; then\r\n    \/usr\/local\/bin\/npm install --production\r\nfi\r\n\r\necho -e \"install complete\"\r\nexit 0",
+            "container": "node:12-buster-slim",
+            "entrypoint": "bash"
+        }
+    },
+    "variables": [
+        {
+            "name": "Bot js file",
+            "description": "The file that starts the bot.",
+            "env_variable": "BOT_JS_FILE",
+            "default_value": "index.js",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string"
+        },
+        {
+            "name": "Additional Node packages",
+            "description": "Install additional node packages.\r\n\r\nUse spaces to separate.",
+            "env_variable": "NODE_PACKAGES",
+            "default_value": "discord.js",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "nullable|string"
+        }
+    ]
+}
